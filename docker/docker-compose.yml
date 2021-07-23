@@ -1,0 +1,28 @@
+version: "3.3"
+
+services: 
+  mysql:
+      container_name: db_mysql
+      image: mysql:5.7
+      volumes: 
+        - db_data:/var/lib/mysql
+      environment:
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_DATABASE: ${MYSQL_DATABASE}
+          MYSQL_USER: ${MYSQL_USER}
+          MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      ports:
+          - "3306:3306"
+  dynamodb:
+    container_name: db_dynamo
+    image: amazon/dynamodb-local:latest
+    volumes:
+      - dynamodb_data:/var/lib/dynamodb/data
+    ports:
+      - "8000:8000"
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-inMemory"]
+
+volumes:
+  db_data: {}
+  dynamodb_data: {}
+
