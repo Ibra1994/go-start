@@ -1,18 +1,33 @@
 version: "3.3"
 
-services: 
+services:
+  postgres:
+    container_name: db_postgres
+    image: postgres:latest
+    volumes: 
+      - db_data:/var/lib/postgresql
+    environment: 
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+    ports: 
+      - "5432:5432"
+
+
   mysql:
-      container_name: db_mysql
-      image: mysql:5.7
-      volumes: 
-        - db_data:/var/lib/mysql
-      environment:
-          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-          MYSQL_DATABASE: ${MYSQL_DATABASE}
-          MYSQL_USER: ${MYSQL_USER}
-          MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      ports:
-          - "3306:3306"
+    container_name: db_mysql
+    image: mysql:5.7
+    volumes: 
+      - db_data:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+        - "3306:3306"
+
+
   dynamodb:
     container_name: db_dynamo
     image: amazon/dynamodb-local:latest
@@ -22,6 +37,7 @@ services:
       - "8000:8000"
     command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-inMemory"]
 
+    
 volumes:
   db_data: {}
   dynamodb_data: {}

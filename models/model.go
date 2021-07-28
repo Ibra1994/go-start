@@ -3,7 +3,7 @@ package models
 import (
 	"log"
 
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -17,8 +17,8 @@ type Model struct {
 func init() {
 	var err error
 
-	dsn := "default:secret@tcp(10.0.75.1:3306)/default"
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	dsn := "host=10.0.75.1 user=default password=secret dbname=default port=5432 sslmode=disable"
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		log.Panic(err)
