@@ -5,7 +5,7 @@ services:
     container_name: db_postgres
     image: postgres:latest
     volumes: 
-      - db_data:/var/lib/postgresql
+      - posgres_data:/var/lib/postgresql
     environment: 
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -39,6 +39,7 @@ services:
 
     
 volumes:
+  posgres_data: {}
   db_data: {}
   dynamodb_data: {}
 
